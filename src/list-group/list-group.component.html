@@ -4,6 +4,7 @@
     [ngStyle]="{'max-height': maxheight, 'max-width': maxwidth, 'height': height, 'width':width}"
     (drop)="dropContainer($event)"
     (dragover)="dragoverContainer($event)"
-    (dragleave)="dragleaveContainer($event)">
+    (dragleave)="dragleaveContainer($event)"
+    (keydown)="keydownContainer($event)">
     <ng-content></ng-content>
 </ul>

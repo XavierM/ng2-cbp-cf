@@ -1,10 +1,13 @@
 <div class="cf-dual-list">
     <div>
         <cf-list-group [width]="width" [height]="height" [multiSelect]="true"
+            [id]="getAvailableListId()"
             (dropListGroup)="dropDeselected($event)"
             (dragoverListGroup)="allowDropSelected($event)"
-            (dragleaveListGroup)="dragLeave()">
+            (dragleaveListGroup)="dragLeave()"
+            (keydownListGroup)="onDualListAvailableKeydown($event)">
             <cf-list-group-item *ngFor="let item of availableL.list; let idx=index;"
+                [id]="getAvailableListId(idx)"
                 (click)="selectItem($event, item)"
                 [active]="isPickedToBeSelected(item)"
                 is-draggable="true"
@@ -36,10 +39,13 @@
     </div>
     <div>
         <cf-list-group [width]="width" [height]="height" [multiSelect]="true"
+            [id]="getSelectedListId()"
             (dropListGroup)="dropSelected($event)"
             (dragoverListGroup)="allowDropDeselected($event)"
-            (dragleaveListGroup)="dragLeave()">
+            (dragleaveListGroup)="dragLeave()"
+            (keydownListGroup)="onDualListSelectedKeydown($event)">
             <cf-list-group-item *ngFor="let item of selectedL.list; let idx=index;"
+                    [id]="getSelectedListId(idx)"
                     (click)="deselectItem($event, item);"
                     [active]="isPickedToBeDeselected(item)"
                     is-draggable="true"

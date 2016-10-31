@@ -66,6 +66,22 @@ export class DualListComponent implements ControlValueAccessor {
         return list;
     }
 
+    get selectedListId(idx): string {
+        if(idx) {
+            return `${this.id}-selected-` + idx.toString();
+        } else {
+            return `${this.id}-selected`;
+        }
+    }
+
+    get availableListId(): string {
+        if(idx) {
+            return `${this.id}-available-` + idx.toString();
+        } else {
+            return `${this.id}-available`;
+        }
+    }
+
     @Input()
     get source(): any[] {
         return this._source;
@@ -257,5 +273,72 @@ export class DualListComponent implements ControlValueAccessor {
 
     registerOnTouched(fn: any) {
         this.onTouched = fn;
+    }
+
+    onDualListAvailableKeydown(event: Event) {
+        this.onDualListkeydown(event, 'available');
+    }
+
+    onDualListSelectedKeydown(event: Event) {
+        this.onDualListkeydown(event, 'selected');
+    }
+
+    private _onDualListKeydown(event: Event, type: string) {
+        if (type === 'selected') {
+
+        } else if (type === 'available') {
+
+        }
+
+        if(this.isKey($event, 'ArrowUp')) {
+            $event.stopPropagation();
+            $event.preventDefault();
+        } else if(this.isKey($event, 'ArrowUp', false, true)) {
+            let previousNode = this.previousVisibleNode();
+            if(previousNode != null) {
+                this.service.highlightNode(previousNode);
+            }
+
+            $event.stopPropagation();
+            $event.preventDefault();
+        } else if(this.isKey($event, 'ArrowDown')) {
+            let nextNode = this.nextVisibleNode();
+            if(nextNode != null) {
+                this.service.highlightNode(nextNode);
+                this.service.selectNode(nextNode);
+            }
+
+            $event.stopPropagation();
+            $event.preventDefault();
+        } else if(this.isKey($event, 'ArrowDown', false, true)) {
+            let nextNode = this.nextVisibleNode();
+            if(nextNode != null) {
+                this.service.highlightNode(nextNode);
+            }
+
+            $event.stopPropagation();
+            $event.preventDefault();
+        } else if(this.isKey($event, 'Home')) {
+            this.service.highlightNode(this.visibleNodes[0]);
+            this.service.selectNode(this.visibleNodes[0]);
+
+            $event.stopPropagation();
+            $event.preventDefault();
+        } else if(this.isKey($event, 'Home', false, true)) {
+            this.service.highlightNode(this.visibleNodes[0]);
+
+            $event.stopPropagation();
+            $event.preventDefault();
+        } else if(this.isKey($event, 'End')) {
+            this.service.highlightNode(this.visibleNodes[this.visibleNodes.length - 1]);
+            this.service.selectNode(this.visibleNodes[this.visibleNodes.length - 1]);
+
+            $event.stopPropagation();
+            $event.preventDefault();
+        } else if(this.isKey($event, 'End', false, true)) {
+
+            $event.stopPropagation();
+            $event.preventDefault();
+        }
     }
 }

@@ -32,6 +32,7 @@ export class ListGroupComponent implements AfterContentInit, OnDestroy {
     @Output() dropListGroup: EventEmitter<DragEvent> = new EventEmitter<DragEvent>();
     @Output() dragoverListGroup: EventEmitter<DragEvent> = new EventEmitter<DragEvent>();
     @Output() dragleaveListGroup: EventEmitter<DragEvent> = new EventEmitter<DragEvent>();
+    @Output() keydownListGroup: EventEmitter<Event> = new EventEmitter<Event>();
 
     private _subscription: Subscription[] = [];
 
@@ -68,6 +69,10 @@ export class ListGroupComponent implements AfterContentInit, OnDestroy {
 
     dragleaveContainer(event: DragEvent) {
         this.dragleaveListGroup.emit(event);
+    }
+
+    keydownContainer(event: Event) {
+        this.keydownListGroup.emit(event);
     }
 
 }
